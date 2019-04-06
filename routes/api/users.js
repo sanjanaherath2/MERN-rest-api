@@ -113,6 +113,39 @@ router.post("/login", (req, res) => {
       });
     });
   });
+
+  
+ router.get("/getuser", (req, res) => {
+   
+  const email = req.body.email;
+
+  // Find user by email
+    User.findOne({ email }).then(user => {
+      // Check if user exists
+      if (!user) {
+        return res.status(404).json({ emailnotfound: "Email not found" });
+      }
+ 
+      
+          const payload = {
+            id: user.id,
+            name: user.name,
+            firstName:user.fname,
+            lastName:user.lname,
+            email:user.email
+            
+          };
+          console.log(payload)
+          
+              res.json({
+                success: true,
+                payload:payload
+              
+              });
+ 
+    });
+  });
+
   
   module.exports = router;
   
